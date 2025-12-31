@@ -1,0 +1,5 @@
+{
+  "name": "Freelance Price & Timeline Estimator",
+  "description": "A Gemini-powered assistant designed for freelancers to estimate project budgets and timelines based on historical winning proposals and client requirements.",
+  "requestFramePermissions": []
+}
