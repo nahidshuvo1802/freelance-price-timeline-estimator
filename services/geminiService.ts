@@ -23,7 +23,13 @@ export const parseProjectDocument = async (fileData: string, mimeType: string): 
   projectScope?: string,
   phases?: string[]
 }> => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || "AIzaSy..." }); // Using fallback if env not set for dev, though should use env
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+  if (!apiKey) {
+    console.error("Missing VITE_GEMINI_API_KEY in environment variables");
+    return { requirements: "Configuration Error: API Key missing." };
+  }
+
+  const ai = new GoogleGenAI({ apiKey });
 
   const systemInstruction = `
     You are an expert document analyzer. Extract project information from the provided file.
@@ -78,7 +84,12 @@ export const generateEstimation = async (
   examples: ProjectExample[],
   config: EstimationConfig
 ): Promise<EstimationResult> => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+  if (!apiKey) {
+    throw new Error("Missing VITE_GEMINI_API_KEY in environment variables");
+  }
+
+  const ai = new GoogleGenAI({ apiKey });
 
   const exampleParts: any[] = [];
   examples.forEach((ex, idx) => {
